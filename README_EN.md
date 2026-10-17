@@ -1,6 +1,10 @@
 # STM32 Industrial Environmental Data Acquisition
 
+> **Author: Hzhikai · Original Technical Portfolio · Open Learning · MIT Licensed**
+
 This portfolio repository presents a privacy-safe reconstruction of selected modules from an STM32F103-based industrial environmental data collector.
+
+The public source code, architecture and documentation in this repository were independently organized and authored by **Hzhikai** from hands-on embedded development experience. They are shared for technical exchange, open learning and portfolio presentation. Reuse and improvement are welcome with attribution and preservation of the license notice.
 
 The original system collected wind, temperature, humidity, pressure and rainfall data over UART/RS485, maintained local and cellular network links, and handled timeouts and recovery in an RTOS-based firmware architecture.
 
@@ -20,11 +24,11 @@ This is **not** the production firmware. It contains no credentials, real endpoi
 ```text
 include/daq/   Public C interfaces
 src/           Protocol, filtering and state-machine modules
-platform/      Host-side mock transport
-examples/      Synthetic demonstration entry point
+platform/      Reference transport adapter
+examples/      Functional demonstration entry point
 docs/          Publication notes and image checklist
 ```
 
 ## License
 
-The reconstruction code included in this repository is available under the [MIT License](LICENSE). The license does not apply to any excluded production firmware, proprietary material, or third-party dependency.
+The code and documentation authored by **Hzhikai** and included in this repository are available under the [MIT License](LICENSE). See [AUTHORS.md](AUTHORS.md) for authorship and authorization details. The license does not apply to any excluded production firmware, proprietary material, or third-party dependency.

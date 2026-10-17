@@ -14,17 +14,17 @@ add_library(daq_core
 )
 target_include_directories(daq_core PUBLIC include)
 
-add_library(mock_transport platform/mock_transport.c)
-target_include_directories(mock_transport PUBLIC include platform)
-target_link_libraries(mock_transport PUBLIC daq_core)
+add_library(reference_transport platform/reference_transport.c)
+target_include_directories(reference_transport PUBLIC include platform)
+target_link_libraries(reference_transport PUBLIC daq_core)
 
 if(MSVC)
     target_compile_options(daq_core PRIVATE /W4 /WX)
-    target_compile_options(mock_transport PRIVATE /W4 /WX)
+    target_compile_options(reference_transport PRIVATE /W4 /WX)
 else()
     target_compile_options(daq_core PRIVATE -Wall -Wextra -Wpedantic -Werror)
-    target_compile_options(mock_transport PRIVATE -Wall -Wextra -Wpedantic -Werror)
+    target_compile_options(reference_transport PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()
 
 add_executable(host_demo examples/host_demo.c)
-target_link_libraries(host_demo PRIVATE daq_core mock_transport)
+target_link_libraries(host_demo PRIVATE daq_core reference_transport)

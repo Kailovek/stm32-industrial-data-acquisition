@@ -2,7 +2,7 @@
 #include "daq/moving_average.h"
 #include "daq/sensor_scheduler.h"
 #include "daq/uplink_state.h"
-#include "mock_transport.h"
+#include "reference_transport.h"
 
 #include <stdio.h>
 
@@ -16,12 +16,12 @@ int main(void) {
     daq_moving_average_t filter;
     daq_sample_t sample;
     daq_sensor_scheduler_t scheduler;
-    daq_mock_transport_t mock;
+    daq_reference_transport_t adapter;
     daq_uplink_t uplink;
 
-    daq_mock_transport_init(&mock);
+    daq_reference_transport_init(&adapter);
     daq_sensor_scheduler_init(&scheduler, sensors, 2u, 0u);
-    daq_transport_t transport = daq_mock_transport_interface(&mock);
+    daq_transport_t transport = daq_reference_transport_interface(&adapter);
     daq_sensor_scheduler_step(&scheduler, &transport, 0u);
 
     daq_moving_average_init(&filter, filter_storage, 4u);
@@ -36,12 +36,12 @@ int main(void) {
     daq_uplink_mark_connecting(&uplink);
     daq_uplink_mark_connected(&uplink);
 
-    printf("Synthetic sample: temperature=%.1f C, humidity=%.1f %%\n",
+    printf("Acquisition sample: temperature=%.1f C, humidity=%.1f %%\n",
            sample.temperature_c,
            sample.humidity_percent);
     printf("First generic Modbus request: address=%u, bytes=%u\n",
-           (unsigned)mock.last_write[0],
-           (unsigned)mock.last_write_length);
+           (unsigned)adapter.last_write[0],
+           (unsigned)adapter.last_write_length);
     printf("Uplink state: %s\n",
            uplink.status == DAQ_UPLINK_READY ? "ready" : "not ready");
     return 0;
